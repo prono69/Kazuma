@@ -123,6 +123,10 @@ def stealpack(update, context):
         reply(msg, s.REPLY_NOT_STICKER_IMAGE)
         return
     packname = ' '.join(context.args)
+    kek = packname.split(",")
+    packname = kek[0]
+    short = kek[1]
+    short = short.replace(" ", "_")
     replymsg = msg.reply_text(s.STEALING, parse_mode=ParseMode.MARKDOWN)
     try: 
         oldpack = context.bot.getStickerSet(sticker.set_name)
@@ -134,7 +138,8 @@ def stealpack(update, context):
 
     useridhash = hashlib.sha1(bytearray(user.id)).hexdigest()
     packnamehash = hashlib.sha1(bytearray(packname.lower().encode('utf-8'))).hexdigest()
-    packid = f'K{packnamehash[:10]}{useridhash[:10]}_by_{context.bot.username}'
+    # packid = f'K{packnamehash[:10]}{useridhash[:10]}_by_{context.bot.username}'
+    packid = f"{short}_by_{context.bot.username}"
     
     if msg.reply_to_message.sticker.is_animated:
         ext = 'tgs'
